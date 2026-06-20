@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checkout</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #checkout-list p {
+      font-size: 18px;
+      margin: 8px 0;
+    }
+    h3 {
+      margin-top: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Checkout Page</h2>
+
+<div id="checkout-list"></div>
+
+<h3>Total: ₹<span id="total">0</span></h3>
+
+<button onclick="placeOrder()">Place Order</button>
+<br><br>
+<a href="products.html">Back to Products</a>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let total = 0;
+let html = "";
+
+// Idhu un script.js la irunthu copy pannathu
+const products = [
+  {id: 1, name: "Wireless Mouse", price: 499, img: "https://via.placeholder.com/150/FF0000"},
+  {id: 2, name: "Keyboard", price: 899, img: "https://via.placeholder.com/150/00FF00"},
+  {id: 3, name: "Headphones", price: 1299, img: "https://via.placeholder.com/150/0000FF"}
+];
+
+if(cart.length == 0) {
+  html = "<p>Cart Empty bro!</p>";
+} else {
+  cart.forEach(id => {
+    let p = products.find(x => x.id == id);
+    if(p){
+      html += `<p>${p.name} - ₹${p.price}</p>`;
+      total += p.price;
+    }
+  });
+}
+
+document.getElementById("checkout-list").innerHTML = html;
+document.getElementById("total").innerText = total;
+
+function placeOrder() {
+  alert("Order Placed Successfully!");
+  localStorage.removeItem('cart');
+  window.location = "products.html";
+}
+</script>
+
+</body>
+</html>
